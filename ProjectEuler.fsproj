@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{d74e957b-6ee7-4149-a829-bece19f29edb}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ProjectEuler</RootNamespace>
+    <AssemblyName>ProjectEuler</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <Name>ProjectEuler</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Debug\ProjectEuler.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Release\ProjectEuler.XML</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\FSharp\1.0\Microsoft.FSharp.Targets" Condition="!Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
+  <ItemGroup>
+    <Compile Include="FsCommon.fs" />
+    <Compile Include="Problem_0001.fs" />
+    <Compile Include="Problem_0001_Monado.fs" />
+    <Compile Include="Problem_0002.fs" />
+    <Compile Include="Problem_0002_Monad.fs" />
+    <Compile Include="Problem_0003.fs" />
+    <Compile Include="Problem_0003_Monado.fs" />
+    <Compile Include="Problem_0004.fs" />
+    <Compile Include="Problem_0004_Monado.fs" />
+    <Compile Include="Problem_0005.fs" />
+    <Compile Include="Problem_0005_Monado.fs" />
+    <Compile Include="Problem_0006.fs" />
+    <Compile Include="Problem_0006_Monado.fs" />
+    <Compile Include="Problem_0007.fs" />
+    <Compile Include="Problem_0008.fs" />
+    <Compile Include="Problem_0009.fs" />
+    <Compile Include="Problem_0010.fs" />
+    <Compile Include="Problem_0011.fs" />
+    <Compile Include="Problem_0012.fs" />
+    <Compile Include="Problem_0013.fs" />
+    <Compile Include="Problem_0014.fs" />
+    <Compile Include="Problem_0015.fs" />
+    <Compile Include="Problem_0016.fs" />
+    <Compile Include="Problem_0017.fs" />
+    <Compile Include="Problem_0018.fs" />
+    <Compile Include="Problem_0019.fs" />
+    <Compile Include="Problem_0020.fs" />
+    <Compile Include="Problem_0021.fs" />
+    <Compile Include="Problem_0022.fs" />
+    <Compile Include="Problem_0023.fs" />
+    <Compile Include="Problem_0024.fs" />
+    <Compile Include="Problem_0025.fs" />
+    <Compile Include="Problem_0026.fs" />
+    <Compile Include="Problem_0027.fs" />
+    <Compile Include="Problem_0028.fs" />
+    <Compile Include="Problem_0029.fs" />
+    <Compile Include="Problem_0030.fs" />
+    <Compile Include="Problem_0031.fs" />
+    <Compile Include="Problem_0032.fs" />
+    <Compile Include="Problem_0033.fs" />
+    <Compile Include="Problem_0034.fs" />
+    <Compile Include="Problem_0035.fs" />
+    <Compile Include="Problem_0035_2.fs" />
+    <Compile Include="Problem_0036.fs" />
+    <Compile Include="Problem_0037.fs" />
+    <Compile Include="Problem_0038.fs" />
+    <Compile Include="Problem_0039.fs" />
+    <Compile Include="Problem_0040.fs" />
+    <Compile Include="Problem_0041.fs" />
+    <Compile Include="Sample_001.fs" />
+    <Compile Include="Sample_002.fs" />
+    <Compile Include="Sample_003.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>
