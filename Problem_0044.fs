@@ -8,6 +8,11 @@ P4 + P7 = 22 + 70 = 92 = P8である.
 しかし差 70 - 22 = 48は五角数ではない.
 五角数のペア PjとPkについて,差と和が五角数になるものを考える.
 差を D = |Pk - Pj| と書く. 差 D の最小値を求めよ.
+
+参考: http://theburningmonk.com/2010/09/project-euler-problem-44-solution/
+time:
+リアル: 00:00:00.325、CPU: 00:00:00.327、GC gen0: 9, gen1: 0, gen2: 0
+val it : int = 5482660
 *)
 
 let sqrtn n = n |> float |> sqrt |> int

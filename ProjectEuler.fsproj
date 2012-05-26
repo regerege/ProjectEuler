@@ -89,6 +89,7 @@
     <Compile Include="Problem_0042.fs" />
     <Compile Include="Problem_0043.fs" />
     <Compile Include="Problem_0044.fs" />
+    <Compile Include="Problem_0045.fs" />
     <Compile Include="Sample_001.fs" />
     <Compile Include="Sample_002.fs" />
     <Compile Include="Sample_003.fs" />
