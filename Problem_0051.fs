@@ -12,12 +12,12 @@
 
 ※問題文の意味が分けがわからないので、とりあえず下記URLの人のコードの一部をぱくる
 http://infsharpmajor.wordpress.com/2011/11/28/project-euler-problem-51/
+
+リアル: 00:00:00.051、CPU: 00:00:00.046、GC gen0: 5, gen1: 1, gen2: 0
+val it : string = "121313"
 *)
 
-open System
-
 #nowarn "40"
-
 let rec primes = 
     Seq.cache <| seq { yield 2; yield! Seq.unfold nextPrime 3 }
 and nextPrime n =
@@ -29,37 +29,39 @@ and isPrime n =
         |> fun x -> x.Value * x.Value > n
     else false
 
-let of3Digits0To2 (s: string) =
-    let counts = [| (s.Split('0').Length - 1);
-                    (s.Split('1').Length - 1);
-                    (s.Split('2').Length - 1); |]
-    if counts.[1] = 3 && s.Substring(5) = "1" then false
-    else counts.[0] >= 3 || counts.[1] >= 3 || counts.[2] >= 3
-
-let candidates =
+let searchprime len =
     primes
-    |> Seq.takeWhile ((>) 1000000)
-    |> Seq.filter ((<) 100000)
+    |> Seq.skipWhile ((>=)56003)
     |> Seq.map string
-    |> Seq.filter of3Digits0To2
+    |> Seq.filter (fun s ->
+        let checks =
+            [
+                '0', "123456789"
+                '1', "023456789"
+                '2', "013456789"
+            ]
+        let slen (c:char) = s.Split(c).Length
+        // 0 or 1 or 2 でマスクした場合に3カ所以上置き換え出来る素数の場合に
+        // リストからチェック用アイテムを取得
+        let check = checks |> List.tryFind (fst >> slen >> (<=)3)
+        match check with
+        | Some (r,str) ->
+            // 0~9の数字を置き換えて、置き換え後の数が素数のものだけをリストとして返す。
+            let plist =
+                seq {
+                    for c in str -> int <| s.Replace(r,c)
+                } |> Seq.filter isPrime
+                |> Seq.toList
+            // 0or1or2ですでに置き換えているので、それ以外の数字が素数のものが7つある場合かつ
+            // 数字の桁数がすべて同じであることをチェック
+            plist.Length = 7
+            && plist
+            |> List.map (fun n -> (string n).Length)
+            |> Seq.groupBy (fun x -> x)
+            |> (Seq.length >> (=)1)
+        | None -> false
+    )
 
-let has7Transforms (s: string) =
-    let variant =
-        if s.Split('0').Length - 1 >= 3 then
-           ("0",["1";"2";"3";"4";"5";"6";"7";"8";"9"])
-        elif s.Split('1').Length - 1 >= 3 then
-           ("1",["0";"2";"3";"4";"5";"6";"7";"8";"9"])
-        else
-           ("2",["0";"1";"3";"4";"5";"6";"7";"8";"9"])
-
-    Seq.length
-        (seq {
-            for i in (snd variant) do
-                let candidate = Int32.Parse(s.Replace((fst variant), i))
-                if isPrime candidate && candidate >= 100000 then
-                    yield candidate
-              }) >= 7
-
-let problem051 () =
-    candidates
-    |> Seq.find has7Transforms
+let run() =
+    searchprime 8       // 置き換えることで8つの素数
+    |> Seq.head         // 最小の素数を取得
