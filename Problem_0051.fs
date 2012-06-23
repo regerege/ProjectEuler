@@ -54,7 +54,7 @@ let searchprime len =
                 |> Seq.toList
             // 0or1or2ですでに置き換えているので、それ以外の数字が素数のものが7つある場合かつ
             // 数字の桁数がすべて同じであることをチェック
-            plist.Length = 7
+            plist.Length = len - 1
             && plist
             |> List.map (fun n -> (string n).Length)
             |> Seq.groupBy (fun x -> x)
