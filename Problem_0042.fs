@@ -12,7 +12,7 @@
 三角語はいくつあるか?
 *)
 
-let path = @"D:\develop\develop\fsharp\ProjectEuler\words.txt"
+let path = @"D:\develop\develop\fsharp\ProjectEuler\_datas\words.txt"
 let sr = System.IO.File.OpenText path
 let wordseq =
     let rec loop acc = seq {
