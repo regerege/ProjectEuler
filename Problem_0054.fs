@@ -32,44 +32,115 @@ poker.txtには1000個のランダムな手札の組が含まれている. 各�
 各勝負で勝敗は必ず決まる
 1000回中プレイヤー1が勝つのは何回か?
 *)
+open System
+open System.IO
 
-(*
-１．入力値を数値に変換することを基本とする。
-A -> 13  的な
-
-2. 柄をどう扱うか
-判別共用体にする？　-> クラスやオブジェクトが作られるので控えたい。
-柄の枚数だけを判断出来れば良い、ただし3カード同士の比較が出来るようにする。
-
-役が大きい順に並び替えて配列に入れる。
-[4カード(14,13,12,11);なし(9);]
-[ストレートフラッシュ(1,2,3,4,5);]
-[フルハウス(スリーカード(3,2,1),ペアカード(14,13));]
-
-ロイヤルストレートフラッシュ: 99999
-ストレートフラッシュ
-
-数字だけの最大値
-14 * 4 + 13 = 69
-
-役は100以上の数字を使う？
-役なし                   2から14 (J,Q,K,Aが小さい順から11から14)
-ワン・ペア               (13,13),10,9,7; => [113;10;9;7]
-ツー・ペア               (10,10),(2,2),3; => [110102;3] ※並び順が重要 (1ペア目 + 100) * 100 + (2ペア目 + 100)
-スリーカード             100000 + 数字;  (7,7,7),3,2 => [100007;3;2]
-ストレート               (2,3,4,5,6) をどう数字に置き換えるか。
-フラッシュ               Q(1,3,7,9,J) をどう数字に置き換えるか。
-フルハウス               1
-フォーカード             1
-ストレートフラッシュ     1
-ロイヤルフラッシュ       1
-
-3. 
-*)
-
+let sjis = System.Text.Encoding.GetEncoding(932)
 let path = @"D:\develop\develop\fsharp\ProjectEuler\_datas\Problem054_poker.txt"
 
+let (|Card|Suit|None|) (n:int) =
+    match n with
+    | 83 -> Suit(20)        // スペード
+    | 67 -> Suit(21)        // クラブ
+    | 68 -> Suit(22)        // ダイヤ
+    | 72 -> Suit(23)        // ハート
+    | 65 -> Card(14)        // ナンバー
+    | 84 -> Card(10)        // ナンバー
+    | 74 -> Card(11)        // ナンバー
+    | 81 -> Card(12)        // ナンバー
+    | 75 -> Card(13)        // ナンバー
+    | x ->
+        if 50 <= x && x <= 57 then Card(x-48)      // ナンバー
+        else None           // 判定の必要がない値
+let trunCard = function
+    | Card x | Suit x -> x
+    | None -> 0
 
+module Poker =
+    let card5 (s:seq<int>) =
+        // カードの配列、フラッシュ判定用カウント　をスキャン
+        s |> Seq.scan (fun (cards,(h,sc),c) x ->
+            let (cards,(h,sc),c) =
+                if c = 10 then [],(0,0),0
+                else cards,(h,sc),c
+            if x <= 14 then cards@[x],(h,sc),c+1
+            else cards,(if h = x || sc = 0 then x,sc+1 else 0,0),c+1
+        ) ([],(0,0),0)
+        |> Seq.filter (fun (_,_,c) -> c = 10)
+        |> Seq.map (fun (cards,(_,sc),_) -> cards,sc=5)
+        // カードの判定
+    let sort (s:seq<int list * bool>) =
+        s |> Seq.map (fun (cards,f) ->
+            let cs = cards |> Seq.countBy id |> Seq.sortBy snd
+            let cc = cs |> Seq.map snd |> Seq.toList |> List.rev
+            cs
+            |> Seq.groupBy snd
+            |> Seq.map (
+                snd >> Seq.sortBy fst
+                >> Seq.collect (fun (x,c) -> Array.create c x |> Array.toSeq)
+                >> Seq.toList >> List.rev)
+            |> Seq.toList
+            |> List.rev
+            |> List.collect id
+            |> (fun l -> l,f,cc)
+        )
+    let role (s:seq<int list * bool * int list>) =
+        s |> Seq.map (fun (cards,f,cc) ->
+            let n = cards.[4]
+            let s = cards = [(n+4)..(-1)..n] || cards = 14::[(n+3)..(-1)..n]
+            let score =
+                match cc with
+                | [4;1] -> 7        // フォーカード
+                | [3;2] -> 6        // フルハウス
+                | [3;_;_] -> 3      // スリーカード
+                | [2;2;1] -> 2      // ツーペア
+                | [2;1;1;1] -> 1    // 1ペア
+                | _ ->
+                    match (n,s,f) with
+                    | (10,true,true) -> 9
+                    | (_,true,true) -> 8
+                    | (_,_,true) -> 5
+                    | (_,true,_) -> 4
+                    | _ -> 0
+            let score = if score <= 3 && f then 5 else score
+            score::cards
+        )
+
+let ReadCard f =
+    use sr = new StreamReader(path,sjis)
+    seq { while not(sr.EndOfStream) do yield sr.Read() |> trunCard }
+    |> Seq.filter ((<=)1)
+    |> Poker.card5          // 5枚組を判定＆比較用に変換
+    |> Poker.sort           // カードの並び替え
+    |> Poker.role           // 役判定
+    // player1、player2のペア
+    |> Seq.scan (fun (p1,p2) cards ->
+        match (p1,p2) with
+        | ([],[]) -> cards,[]
+        | (_,[]) -> p1,cards
+        | _ -> cards,[]
+    ) ([],[])
+    |> Seq.filter (fun (p1,p2) -> p1.Length = 6 && p2.Length = 6)
+    // 比較
+    |> Seq.map (fun (p1,p2) ->
+        if p1 < p2 then (0,1)
+        elif p1 > p2 then (1,0)
+        else (0,0)
+        |> fun a -> a
+    ) |> f
 
 let run() =
-    1
+    ReadCard <| (fun s ->
+        s |> Seq.map (fun (player1,player2) ->
+            if player1 < player2 then (0,1)
+            elif player1 > player2 then (1,0)
+            else (0,0)
+        ) |> Seq.reduce (fun (p1,p2) (acm1,acm2) -> p1+acm1,p2+acm2)
+        |> (printfn "%A")
+    )
+
+(*
+(376, 624)
+リアル: 00:00:00.104、CPU: 00:00:00.093、GC gen0: 3, gen1: 3, gen2: 0
+val it : unit = ()
+*)
