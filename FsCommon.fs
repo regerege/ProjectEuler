@@ -1,4 +1,6 @@
-﻿module FsCommon
+﻿namespace FsCommons
+
+//module FsCommon
 (*
 // http://fussy.web.fc2.com/algo/algo10-6.htm
 

@@ -4,7 +4,7 @@ open System.Diagnostics
 // モジュール名を変える事で別の問題の解答を取得出来る
 let getAnswer =
     async {
-        Problem_0055.run()
+        Problem_0057.run()
         |> printfn "%A"
         Async.CancelDefaultToken()
     }

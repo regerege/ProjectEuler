@@ -38,6 +38,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
   <ItemGroup>
     <Compile Include="FsCommon.fs" />
+    <Compile Include="FsFractions.fs" />
     <Compile Include="Problem_0001.fs" />
     <Compile Include="Problem_0001_Monado.fs" />
     <Compile Include="Problem_0002.fs" />
@@ -100,8 +101,9 @@
     <Compile Include="Problem_0052.fs" />
     <Compile Include="Problem_0053.fs" />
     <Compile Include="Problem_0054.fs" />
-    <Compile Include="Problem_0056.fs" />
     <Compile Include="Problem_0055.fs" />
+    <Compile Include="Problem_0056.fs" />
+    <Compile Include="Problem_0057.fs" />
     <Compile Include="Sample_001.fs" />
     <Compile Include="Sample_002.fs" />
     <Compile Include="Sample_003.fs" />
