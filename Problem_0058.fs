@@ -42,7 +42,7 @@ let run() =
         let pc = pc + (List.filter isPrime l).Length
         ac,pc
     ) (0,0)
-    |> Seq.mapi (fun n a -> ((n-1)*2+1,a))                      // n週目を辺の長さに変換 2(n-1)+1
+    |> Seq.mapi (fun n a -> ((n-1)*2+1,a))                      // n週目を外周の1辺の長さに変換 2(n-1)+1
     |> Seq.filter (fun (_,(y,x)) -> let z = float x / float y in z < 0.1)   // 10%未満をフィルタリング
     |> Seq.head
     |> fst
