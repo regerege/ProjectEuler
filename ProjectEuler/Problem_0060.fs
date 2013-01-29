@@ -1,5 +1,4 @@
 ﻿module Problem_0060
-open System.Diagnostics
 (*
 Problem 60
 http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%2060
@@ -11,6 +10,9 @@ http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%2060
  これは, このような性質をもつ4つの素数の組の和の中で最小である.
 
 任意の2つの素数を繋げたときに別の素数が生成される, 5つの素数の組の和の中で最小のものを求めよ.
+
+リアル: 00:00:19.195、CPU: 00:00:19.156、GC gen0: 908, gen1: 3, gen2: 1
+val it : int list * int = ([13; 5197; 5701; 6733; 8389], 26033)
 *)
 
 #nowarn "40"
@@ -36,7 +38,8 @@ step3: 5.. [ (2,[2]); (3,[3]); (5,[5]); ]
 step4: 7.. [ (2,[2]); (3,[3;7;]); (5,[5]); (7,[3;7;]); ]  // リストに追加したkey分ループする必要あり
 *)
     let edge =
-        primes |> Seq.scan (fun l p ->
+        primes |> Seq.takeWhile ((>)10000)
+        |> Seq.fold (fun l p ->
             // 分析関数的にエッジを取得
             let (l1,l2) =
                 l |> List.map (fun (key,pl) ->
@@ -45,8 +48,8 @@ step4: 7.. [ (2,[2]); (3,[3;7;]); (5,[5]); (7,[3;7;]); ]  // リストに追加�
                 |> List.unzip
             List.append l1 [(p, l2 |> List.choose id)]) []
         // とりあえず確認用に上限を決める　（最終的には上限なしで行う）
-        |> Seq.skip 1500
-        |> Seq.head
+//        |> Seq.skip 1500        // 1500回計算する。
+//        |> Seq.head         // 事前に素数のエッジを結果を集める。
     // 最終手段・・・・！
     let intersect a b = List.filter (fun p -> List.exists((=)p) b) a
     seq {
@@ -61,7 +64,6 @@ step4: 7.. [ (2,[2]); (3,[3;7;]); (5,[5]); (7,[3;7;]); ]  // リストに追加�
                     for (p4,pl4) in e3 do
                         let ipl4 = intersect ipl3 pl4
                         let e4 = List.filter (fun (a,_) -> List.exists ((=)a) ipl4 && p4 < a) <| e3.Tail
-                        if p1 = 13 then printfn "%A" [p1;p2;p3;p4;]
                         for (p5,pl5) in e4 do
                             yield [p1;p2;p3;p4;p5]
     }
