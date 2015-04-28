@@ -1,6 +1,8 @@
 ﻿module Problem_0061
-
 (*
+Problem0061
+http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%2061
+
 三角数, 四角数, 五角数, 六角数, 七角数, 八角数は多角数であり, それぞれ以下の式で生成される.
 
 三角数	P3,n=n(n+1)/2	1, 3, 6, 10, 15, ...

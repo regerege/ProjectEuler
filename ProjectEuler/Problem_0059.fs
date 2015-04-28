@@ -1,6 +1,8 @@
 ﻿module Problem_0059
-
 (*
+Problem 59
+http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%2059
+
 (訳者注: 文字コードの説明は適当です) 各文字はそれぞれ一意のコードに割り当てられている.
 よく使われる標準としてASCII (American Standard Code for Information Interchange) がある.
 ASCIIでは, 大文字A = 65, アスタリスク (*) = 42, 小文字k = 107というふうに割り当てられている.

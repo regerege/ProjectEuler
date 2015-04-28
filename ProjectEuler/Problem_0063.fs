@@ -1,5 +1,8 @@
 ﻿module Problem_0063
 (*
+Problem 63
+http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%2063
+
 5桁の数 16807 = 7^5 は自然数を5乗した数である. 同様に9桁の数 134217728 = 8^9 も自然数を9乗した数である.
 自然数を n 乗して得られる n 桁の正整数は何個あるか?
 

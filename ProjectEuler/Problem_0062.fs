@@ -1,6 +1,6 @@
 ﻿module Problem_0062
 (*
-Problem0062
+Problem 62
 http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%2062
 
 立方数 41063625 (345^3) は, 桁の順番を入れ替えると2つの立方数になる: 56623104 (384^3) と 66430125 (405^3) である.

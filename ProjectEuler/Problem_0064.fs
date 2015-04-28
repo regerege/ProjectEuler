@@ -1,5 +1,7 @@
 ﻿module Problem_0064
 (*
+http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%2064
+
 平方根は連分数の形で表したときに周期的であり, 以下の形で書ける:
 √N = a0 + 1 / (a1 + 1 / (a2 + 1 / (a3 + ...)))
 
@@ -36,38 +38,33 @@ a7 = 1, 7/(√23-4) = 7(√23+4)/7 = 8 + (√23-4)
 N ≤ 13で奇数の周期をもつ平方根は丁度4つある.
 
 N ≤ 10000 について奇数の周期をもつ平方根が何個あるか答えよ.
+
+Real: 00:00:00.232, CPU: 00:00:00.218, GC gen0: 14, gen1: 1, gen2: 0
+val it : int = 1322
 *)
 
-let squares =
-    Seq.cache <|
-        Seq.initInfinite ((+)1)
-        |> Seq.map (fun n -> n,n*n)
-let find n =
-    squares
-    |> Seq.takeWhile (snd >> (>=)n)
-    |> Seq.maxBy fst
-    |> fst
+// あらかじめ二乗数のリストを用意する。
+let squares = [1..100] |> Seq.map (fun x -> x,x*x) |> Seq.toList
+// nの平方根を行った場合の整数値を探す。
+let find n = squares |> Seq.takeWhile (snd >> (>=)n) |> Seq.max |> fst
 
-/// 平方根の連分数周期を取得
-let getPeriodContinued n =
-    let s = sqrt <| float n
-
-    let rec pc d = seq {
-        let r = sqrt d
-        let i = int(r)
-        let d2 = r - float i
-        yield int(d2)
-        yield! pc d2
+let contfrac n =
+    let i = find n
+    let rec cf m d =
+        seq {
+            let a = i+(-1*m)
+            let b = (n-(m*m)) / d
+            let c = a / b
+            let a2 = a % b - i
+            yield c
+            if 1 < b then
+                yield! (cf a2 b)
         }
-    pc <| float n
-    |> Seq.take 10
-    |> Seq.toList
-
+    if i*i = n || n <= 1 then []
+    else cf (-i) 1 |> Seq.toList
 
 let run() =
-    seq { 1..10000 }
-    |> Seq.map getPeriodContinued
-    |> Seq.iter (printfn "%A")
-//    |> Seq.filter (fun n -> n % 2 = 1)
-//    |> Seq.length
-
+    seq [1..10000]
+    |> Seq.map (contfrac >> List.length)
+    |> Seq.filter (fun len -> 0 < len && len % 2 = 1)
+    |> Seq.length
