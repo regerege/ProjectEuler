@@ -19,14 +19,14 @@ Real: 00:00:00.039, CPU: 00:00:00.031, GC gen0: 2, gen1: 2, gen2: 0
 val it : string = "(661,Some(16421658242965910275055840472270471049, 638728478116949861246791167518480580))"
 *)
 
-// あらかじめ二乗数のリストを用意する。
+// square number of infinite sequence
 let squares =
     Seq.unfold (fun x -> Some(x,x+1I)) 1I
     |> Seq.map (fun x -> x,x*x)
     |> Seq.cache
-// nの平方根を行った場合の整数値を探す。
+// the find of nearest positive integer to square number
 let find n = squares |> Seq.takeWhile (snd >> (>=)n) |> Seq.max |> fst
-// 連分数展開
+// Continued Fraction
 let contfrac n =
     let i = find n
     let rec cf m d =
