@@ -30,7 +30,7 @@ val it : string = "6531031914842725"
 *)
 
 let calc n =
-    let m = (n*n + n*n + (n*n+n)/2 + n)/n
+    let m = ((n*n+n)/2*3+n*n)/n
     let rec f l p =
         match l,p with
         | [],_ | _,[] | [],[] -> l
