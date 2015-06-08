@@ -28,7 +28,55 @@ and isPrime n =
         |> fun x -> x.Value * x.Value > n
     else false
 
-let problem060() =
+//================================================================================
+let isp a b = sprintf "%d%d" a b |> int |> isPrime
+let isp2 a b = isp a b && isp b a
+let rec intersect a b =
+    if List.length a = List.length b then a = b
+    elif List.length a < List.length b then
+        match a,b with
+        | [],_ -> true
+        | _,[] -> false
+        | x::xs,y::ys ->
+            if x > y then false
+            elif x = y then intersect xs ys
+            else intersect a ys
+    else false
+(*
+p1,[]
+p2,[p1]
+p3,[p2;p1]
+...
+Pn-1以下の素数の集合から条件に一致する素数のリストを作り、
+nの値が大きいもの順から連結リスト的にチェックを行い、5つの素数を探し出す。
+最初に見つけた5組の素数が最も小さい素数の集合となるはず。
+*)
+let part2() =
+    // scan function
+    // step1  [(2,[])]
+    // step2  [(3,[]);(2,[])]
+    // step3  [(5,[]);(3,[]);(2,[])]
+    // step4  [(7,[3]);(5,[]);(3,[]);(2,[])]
+    // step5  [(11,[??]);(7,[3]);(5,[]);(3,[]);(2,[])]
+    let f l p1 =
+        match l with
+        | [] -> [p1,[]]
+        | _ -> [p1,List.filter(isp2 p1) <| List.map fst l]@l
+    // a : int list
+    // b : (int * int list) lsit
+    let rec choise = function
+        | [] -> None
+        | (p,ps)::xs ->
+            List.filter (fst >> ((=))) xs
+    primes
+    |> Seq.scan f []
+    |> Seq.skip 1
+    |> Seq.filter (Seq.nth 0 >> snd >> List.length >> ((<=)4))
+    |> Seq.take 10
+    |> Seq.iter (printfn "%A")
+
+//================================================================================
+let part1() =
     let con a b = int <| sprintf "%d%d" a b
     let isp a b = isPrime (con a b) && isPrime (con b a)
 (*
@@ -71,4 +119,4 @@ step4: 7.. [ (2,[2]); (3,[3;7;]); (5,[5]); (7,[3;7;]); ]  // リストに追加�
     |> (fun l -> (l,List.sum l))
 
 let run() =
-    problem060()
+    part1()
