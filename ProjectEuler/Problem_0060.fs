@@ -11,6 +11,10 @@ http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%2060
 
 任意の2つの素数を繋げたときに別の素数が生成される, 5つの素数の組の和の中で最小のものを求めよ.
 
+> part2();;
+Real: 00:00:06.813, CPU: 00:00:06.765, GC gen0: 575, gen1: 1, gen2: 0
+val it : int * int list = (26033, [8389; 6733; 5701; 5197; 13])
+
 リアル: 00:00:19.195、CPU: 00:00:19.156、GC gen0: 908, gen1: 3, gen2: 1
 val it : int list * int = ([13; 5197; 5701; 6733; 8389], 26033)
 *)
@@ -31,17 +35,45 @@ and isPrime n =
 //================================================================================
 let isp a b = sprintf "%d%d" a b |> int |> isPrime
 let isp2 a b = isp a b && isp b a
-let rec intersect a b =
-    if List.length a = List.length b then a = b
-    elif List.length a < List.length b then
-        match a,b with
-        | [],_ -> true
-        | _,[] -> false
-        | x::xs,y::ys ->
-            if x > y then false
-            elif x = y then intersect xs ys
-            else intersect a ys
-    else false
+let rec intersect c a b =
+    match a,b with
+    | [],_ | _,[] -> c
+    | x::xs,y::ys ->
+        if x = y then intersect (c@[x]) xs ys
+        elif x < y then intersect c a ys
+        else intersect c xs b
+// acm : int list
+// ps : int list
+// l  : (int * int list) lsit
+let rec find max acm ps l =
+    if (max-1) <= List.length acm then acm
+    else
+        match ps,l with
+        | [],_ | _,[] -> acm
+        | x::xs,(y,yps)::ys ->
+            if x > y then
+                find max acm ps (Seq.skipWhile (fst >> (<)y) ys |> Seq.toList)
+            elif x = y then
+                let s = intersect [] xs yps
+                if max - acm.Length - 2 <= List.length s || xs.Length = 1 && yps.Length = 0 then
+                    find max (acm@[x]) s ys
+                else find max acm xs ys
+            else find max acm ps ys
+
+let choise max = function
+    | [] -> None
+    | (p,ps)::xs ->
+        let rec f ps =
+            match ps with
+            | [] -> None
+            | a::s ->
+                if max - 1 <= List.length s then
+                    match find max [] s xs with
+                    | l when List.length l = max - 1 ->
+                        Some([p]@l)
+                    | _ -> f s
+                else None
+        f ([1]@ps)
 (*
 p1,[]
 p2,[p1]
@@ -62,18 +94,13 @@ let part2() =
         match l with
         | [] -> [p1,[]]
         | _ -> [p1,List.filter(isp2 p1) <| List.map fst l]@l
-    // a : int list
-    // b : (int * int list) lsit
-    let rec choise = function
-        | [] -> None
-        | (p,ps)::xs ->
-            List.filter (fst >> ((=))) xs
-    primes
-    |> Seq.scan f []
-    |> Seq.skip 1
-    |> Seq.filter (Seq.nth 0 >> snd >> List.length >> ((<=)4))
-    |> Seq.take 10
-    |> Seq.iter (printfn "%A")
+    let l =
+        primes
+        |> Seq.scan f []
+        |> Seq.skip 1
+        |> Seq.choose (choise 5)
+        |> Seq.head
+    List.sum l,l
 
 //================================================================================
 let part1() =
@@ -119,4 +146,4 @@ step4: 7.. [ (2,[2]); (3,[3;7;]); (5,[5]); (7,[3;7;]); ]  // リストに追加�
     |> (fun l -> (l,List.sum l))
 
 let run() =
-    part1()
+    part2()
