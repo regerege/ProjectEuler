@@ -42,9 +42,6 @@ let rec intersect c a b =
         if x = y then intersect (c@[x]) xs ys
         elif x < y then intersect c a ys
         else intersect c xs b
-// acm : int list
-// ps : int list
-// l  : (int * int list) lsit
 let rec find max acm ps l =
     if (max-1) <= List.length acm then acm
     else
@@ -59,10 +56,22 @@ let rec find max acm ps l =
                     find max (acm@[x]) s ys
                 else find max acm xs ys
             else find max acm ps ys
-
 let choise max = function
     | [] -> None
     | (p,ps)::xs ->
+        let rec f2 ps =
+            seq {
+                match ps with
+                | [] -> yield None
+                | a::s ->
+                    if max - 1 <= List.length s then
+                        match find max [] s xs with
+                        | l when List.length l = max - 1 ->
+                            yield Some([p]@l)
+                        | _ -> yield! f2 s
+                    else yield None
+            }
+        // 条件に一致する5つの組の最初の1つめのみを返す。
         let rec f ps =
             match ps with
             | [] -> None

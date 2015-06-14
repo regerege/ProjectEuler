@@ -2,7 +2,7 @@
 open System.Diagnostics
 
 let getAnswerSynchronised() =
-    Problem_0060.run()
+    Problem_0072.run()
     |> printfn "%A"
 
 // モジュール名を変える事で別の問題の解答を取得出来る
