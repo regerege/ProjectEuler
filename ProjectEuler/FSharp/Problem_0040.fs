@@ -21,7 +21,7 @@ let calc() =
                 for c in (string n) ->
                     (int c)-(int '0')
         }
-    let s2 n = Seq.nth (n-1) s
+    let s2 n = Seq.item (n-1) s
     Seq.init 6 (fun x -> [for i = 1 to x do yield 10])
     |> Seq.map(fun l -> if l.Length <= 0 then 1 else List.reduce(*) l)
     |> Seq.map(s2)

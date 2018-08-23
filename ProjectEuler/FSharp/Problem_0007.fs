@@ -41,4 +41,4 @@ and isPrime n =
     else false
 
 let run() =
-    primes |> Seq.nth 10000
+    primes |> Seq.item 10000

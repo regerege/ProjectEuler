@@ -1,67 +1,80 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{d74e957b-6ee7-4149-a829-bece19f29edb}</ProjectGuid>
+    <ProjectGuid>0623df47-59b7-4497-8e38-2def3f0ff782</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ProjectEuler</RootNamespace>
-    <AssemblyName>ProjectEuler</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <Name>ProjectEuler</Name>
-    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
-    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+    <RootNamespace>FSharp</RootNamespace>
+    <AssemblyName>FSharp</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <UseStandardResourceNames>true</UseStandardResourceNames>
+    <Name>FSharp</Name>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>bin\Debug\ProjectEuler.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>bin\Release\ProjectEuler.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '11.0'">
-      <PropertyGroup>
-        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
-  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(FSharpTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets') ">
+    <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+  </PropertyGroup>
+  <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="data\Problem054_poker.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\Problem054_temp.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\Problem059_cipher1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\Problem067_triangle.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\words.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="packages.config" />
+    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="FsCommon.fs" />
     <Compile Include="FsFractions.fs" />
-    <Compile Include="Problem_0001.fs" />
     <Compile Include="Problem_0001_Monado.fs" />
-    <Compile Include="Problem_0002.fs" />
     <Compile Include="Problem_0002_Monad.fs" />
-    <Compile Include="Problem_0003.fs" />
     <Compile Include="Problem_0003_Monado.fs" />
-    <Compile Include="Problem_0004.fs" />
     <Compile Include="Problem_0004_Monado.fs" />
-    <Compile Include="Problem_0005.fs" />
     <Compile Include="Problem_0005_Monado.fs" />
+    <Compile Include="Problem_0001.fs" />
+    <Compile Include="Problem_0002.fs" />
+    <Compile Include="Problem_0003.fs" />
+    <Compile Include="Problem_0004.fs" />
+    <Compile Include="Problem_0005.fs" />
     <Compile Include="Problem_0006.fs" />
     <Compile Include="Problem_0006_Monado.fs" />
     <Compile Include="Problem_0007.fs" />
@@ -139,19 +152,22 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
+    <Reference Include="FSharp.Core">
+      <HintPath>..\packages\FSharp.Core.4.5.2\lib\net45\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.ValueTuple">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-	     Other similar extension points exist, see Microsoft.Common.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
-	</Target>
-	-->
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

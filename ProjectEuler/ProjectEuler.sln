@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp", "FSharp\FSharp.fsproj", "{0623DF47-59B7-4497-8E38-2DEF3F0FF782}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostgreSQL", "PostgreSQL", "{73208C72-8509-4D4A-81E1-54654DE073ED}"
+	ProjectSection(SolutionItems) = preProject
+		PostgreSQL\Problem0001.sql = PostgreSQL\Problem0001.sql
+		PostgreSQL\Problem0002.sql = PostgreSQL\Problem0002.sql
+		PostgreSQL\Problem0003.sql = PostgreSQL\Problem0003.sql
+		PostgreSQL\Problem0004.sql = PostgreSQL\Problem0004.sql
+		PostgreSQL\Problem0005.sql = PostgreSQL\Problem0005.sql
+		PostgreSQL\Problem0006.sql = PostgreSQL\Problem0006.sql
+		PostgreSQL\Problem0007.sql = PostgreSQL\Problem0007.sql
+		PostgreSQL\Problem0008.sql = PostgreSQL\Problem0008.sql
+		PostgreSQL\Problem0009.sql = PostgreSQL\Problem0009.sql
+		PostgreSQL\Problem0010.sql = PostgreSQL\Problem0010.sql
+		PostgreSQL\Problem0011.sql = PostgreSQL\Problem0011.sql
+		PostgreSQL\Problem0012.sql = PostgreSQL\Problem0012.sql
+		PostgreSQL\Problem0012_2.sql = PostgreSQL\Problem0012_2.sql
+		PostgreSQL\Problem0013.sql = PostgreSQL\Problem0013.sql
+		PostgreSQL\Problem0014.sql = PostgreSQL\Problem0014.sql
+		PostgreSQL\Problem0018.sql = PostgreSQL\Problem0018.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0623DF47-59B7-4497-8E38-2DEF3F0FF782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0623DF47-59B7-4497-8E38-2DEF3F0FF782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0623DF47-59B7-4497-8E38-2DEF3F0FF782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0623DF47-59B7-4497-8E38-2DEF3F0FF782}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B8467C9-BD30-4FE3-BB55-A061FF817D66}
+	EndGlobalSection
+EndGlobal
